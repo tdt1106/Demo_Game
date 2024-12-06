@@ -14,6 +14,10 @@ namespace Demo_Game
         {
             Characters = new List<Character>();
         }
+        public Character GetCharacterById(int characterId)
+        {
+            return Characters.FirstOrDefault(c => c.CharacterId == characterId);
+        }
 
         public void AddCharacter(Character character)
         {
@@ -22,7 +26,7 @@ namespace Demo_Game
 
         public void AddItemToCharacter(int characterId, Item item)
         {
-            var character = Characters.FirstOrDefault(c => c.CharacterId == characterId);
+            var character = GetCharacterById(characterId);
             if (character != null)
             {
                 character.AddItem(item);
@@ -35,7 +39,7 @@ namespace Demo_Game
 
         public void DisplayCharacterInfo(int characterId)
         {
-            var character = Characters.FirstOrDefault(c => c.CharacterId == characterId);
+            var character = GetCharacterById(characterId);
             if (character != null)
             {
                 character.DisplayInfo();
@@ -53,6 +57,20 @@ namespace Demo_Game
             foreach (var character in Characters)
             {
                 Console.WriteLine($"{character.Name} - Items: {character.Items.Count}");
+            }
+        }
+        // Thêm phương thức để lấy máu hiện tại của nhân vật
+        public int GetCharacterHealth(int characterId)
+        {
+            var character = GetCharacterById(characterId);
+            if (character != null)
+            {
+                return character.Health; // Giả định lớp Character có thuộc tính Health
+            }
+            else
+            {
+                Console.WriteLine("Character not found.");
+                return 0; // Trả về giá trị mặc định nếu không tìm thấy
             }
         }
     }

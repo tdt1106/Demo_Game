@@ -74,7 +74,18 @@ public class Program
                                             Console.Write("Enter health amount: ");
                                             if (int.TryParse(Console.ReadLine(), out int health))
                                             {
-                                                game.AddItemToCharacter(characterId, new HealthItem(itemCode, health));
+                                                // Lấy số máu hiện tại của nhân vật
+                                                int currentHealth = game.GetCharacterHealth(characterId);
+
+                                                // Kiểm tra nếu số máu nhập vào không hợp lệ
+                                                if (health < -currentHealth)
+                                                {
+                                                    Console.WriteLine($"Invalid health amount. The health cannot go below zero. Current health: {currentHealth}");
+                                                }
+                                                else
+                                                {
+                                                    game.AddItemToCharacter(characterId, new HealthItem(itemCode, health));
+                                                }
                                             }
                                             else
                                             {
